@@ -1,0 +1,29 @@
+package io.compiler.core.ast;
+
+public class CommandWrite extends Command {
+	private String content;
+
+	@Override
+	public String generateTarget() {
+		return "System.out.println("+content+");";
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public CommandWrite(String content) {
+		super();
+		this.content = content;
+	}
+
+	public CommandWrite() {
+		super();
+	}
+
+	
+}

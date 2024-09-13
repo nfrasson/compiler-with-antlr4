@@ -1,0 +1,120 @@
+grammar FrassonGrammar;
+
+@header {
+    import java.util.ArrayList;
+    import io.compiler.types.Var;
+}
+
+@members {
+    private ArrayList<Var> varList = new ArrayList<Var>();
+}
+
+// Regras iniciais
+prog
+    : 'programa' declara bloco 'fimprog' EOF
+    ;
+
+// Declarações de variáveis
+declara
+    : 'declare' variavel (',' variavel)* '.'
+    ;
+
+// Variável com tipo
+variavel
+    : ID ':' tipo
+    ;
+
+// Tipos de variáveis
+tipo
+    : 'numero'
+    | 'string'
+    ;
+
+// Bloco de comandos principal
+bloco
+    : (cmd '.')+
+    ;
+
+// Comandos
+cmd
+    : cmdLeitura
+    | cmdEscrita
+    | cmdExpr
+    | cmdIf
+    ;
+
+// Comando de leitura
+cmdLeitura
+    : 'leia' '(' ID ')'
+    ;
+
+// Comando de escrita
+cmdEscrita
+    : 'escreva' '(' (TEXT | ID) ')'
+    ;
+
+// Comando de expressão (atribuição)
+cmdExpr
+    : ID ':=' expr
+    ;
+
+// Comando condicional
+cmdIf
+    : 'se' '(' expr op_rel expr ')' 'entao' blocoIf ('senao' blocoIf)?
+    ;
+
+// Bloco de comandos para cmdIf
+blocoIf
+    : '{' (cmd '.')+ '}'
+    ;
+
+// Operadores relacionais
+op_rel
+    : '<'
+    | '>'
+    | '<='
+    | '>='
+    | '!='
+    | '=='
+    ;
+
+// Expressões
+expr
+    : expr ('+' | '-') termo       # exprOp
+    | termo                        # exprTermo
+    ;
+
+// Termos
+termo
+    : termo ('*' | '/') fator      # termoOp
+    | fator                        # termoFator
+    ;
+
+// Fatores
+fator
+    : NUM                          # fatorNum
+    | ID                           # fatorID
+    | '(' expr ')'                 # fatorExpr
+    ;
+
+// Regras léxicas
+
+// Texto
+TEXT
+    : '"' (~["\r\n])* '"'          // Tudo exceto aspas duplas e quebras de linha
+    ;
+
+// Números (inteiros e floats)
+NUM
+    : [0-9]+ ('.' [0-9]+)?         // Inteiros e floats
+    ;
+
+// Identificadores
+ID
+    : [a-zA-Z] [a-zA-Z0-9]*
+    ;
+
+// Tokens ignorados
+WS
+    : [ \t\r\n]+ -> skip
+    ;

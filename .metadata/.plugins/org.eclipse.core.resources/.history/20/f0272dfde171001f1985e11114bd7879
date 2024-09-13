@@ -1,0 +1,39 @@
+package io.compiler.core.ast;
+
+import io.compiler.types.Types;
+import io.compiler.types.Var;
+
+public class CommandRead extends Command {
+
+	private Var var;
+
+	public CommandRead() {
+		super();
+	}
+
+	public CommandRead(Var var) {
+		super();
+		this.var = var;
+	}
+
+	public Var getVar() {
+		return var;
+	}
+
+	public void setVar(Var var) {
+		this.var = var;
+	}
+
+	@Override
+	public String generateTarget() {
+		if (var.getType() == Types.NUMBER) {
+			return var.getId() + " = _scTrx.nextInt();\n";
+		} else if (var.getType() == Types.REALNUMBER) {
+			return var.getId() + " = _scTrx.nextDouble();\n";
+		} else if (var.getType() == Types.STRING) {
+			return var.getId() + " = _scTrx.nextLine();\n";
+		} else {
+			throw new RuntimeException("Tipo não suportado para leitura: " + var.getType());
+		}
+	}
+}

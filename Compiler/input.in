@@ -1,0 +1,43 @@
+programa resultProgram
+
+    // Teste de declaração de variáveis com dois tipos: real e texto
+    declare a, b, c : real;   // Número decimal (float)
+    declare x, y, z : text;   // Texto (string)
+
+    inicio
+        // Teste de saída: imprime "Hello World"
+        escreva("Hello World");
+
+        // Teste de entrada: leia uma string e um número real
+        leia(x);  // Entrada de uma variável de texto
+        leia(a);  // Entrada de uma variável de número real (decimais permitidos)
+
+        // Teste de saída: imprime o valor de 'a'
+        escreva(a);
+
+        // Teste de operação aritmética: adição, subtração, multiplicação e divisão
+        // Atribuição de uma expressão envolvendo operações aritméticas
+        a := 2 + 3 - 5 * 8 / a - a * a;  // Operações com 'a', um número real
+
+        // Teste de estrutura de controle if..else
+        se ( a > 5 ) entao
+            escreva("a maior que 5");    // Executado se a condição for verdadeira
+        senao
+            escreva("a menor ou igual a 5");  // Executado se a condição for falsa
+        fimse
+
+        // Teste de estrutura de controle while
+        enquanto ( a < 10 ) faca
+            escreva("a ainda menor que 10");  // Executado enquanto 'a' for menor que 10
+            a := a + 1;  // Incrementa o valor de 'a'
+        fimenquanto
+
+        // Teste de verificação de variáveis não usadas: 'b' e 'c' nunca são usadas.
+        // Ao final do programa, o compilador deve gerar um aviso sobre essas variáveis.
+
+        // Teste de saída final
+        escreva("O Resultado vale");
+        escreva(a);
+
+    fim
+fimprog

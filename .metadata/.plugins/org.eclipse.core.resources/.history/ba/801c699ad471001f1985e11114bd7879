@@ -1,0 +1,28 @@
+public class CommandWhile extends Command {
+    private String condition;
+    private ArrayList<Command> loopCommands;
+
+    public CommandWhile(String condition, ArrayList<Command> loopCommands) {
+        this.condition = condition;
+        this.loopCommands = loopCommands;
+    }
+
+    @Override
+    public void execute() {
+        while (evaluateCondition()) {
+            for (Command cmd : loopCommands) {
+                cmd.execute();
+            }
+        }
+    }
+
+    private boolean evaluateCondition() {
+        // Lógica para avaliar a condição
+        return true; // Substitua com a lógica real
+    }
+
+    @Override
+    public String toString() {
+        return "While Command [condition=" + condition + "]";
+    }
+}

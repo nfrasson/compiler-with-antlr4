@@ -1,0 +1,29 @@
+package io.compiler.main;
+
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+
+import io.compiler.core.FrassonGrammarLexer;
+import io.compiler.core.FrassonGrammarParser;
+
+public class Main {
+	public static void main(String[] args) {
+		try {
+			FrassonGrammarLexer lexer;
+			FrassonGrammarParser parser;
+			
+			lexer = new FrassonGrammarLexer(CharStreams.fromFileName("input.in"));
+			
+			CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+			
+			parser = new FrassonGrammarParser(tokenStream);
+			
+			System.out.println("Compilador");
+			parser.prog();
+			System.out.println("Compilação realizada");
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+}

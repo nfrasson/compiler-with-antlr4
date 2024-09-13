@@ -1,0 +1,33 @@
+package io.compiler.core.ast;
+
+import java.util.ArrayList;
+
+public class CommandWhile extends Command {
+    private String condition;
+    private ArrayList<Command> loopCommands;
+
+    public CommandWhile(String condition, ArrayList<Command> loopCommands) {
+        this.condition = condition;
+        this.loopCommands = loopCommands;
+    }
+
+    @Override
+    public String generateTarget() {
+        StringBuilder str = new StringBuilder();
+        str.append("label_start_while:\n");
+        str.append("if not (" + condition + ") goto label_end_while;\n");
+
+        for (Command cmd : loopCommands) {
+            str.append(cmd.generateTarget());
+        }
+
+        str.append("goto label_start_while;\n");
+        str.append("label_end_while:\n");
+        return str.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "While Command [condition=" + condition + "]";
+    }
+}

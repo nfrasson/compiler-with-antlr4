@@ -1,0 +1,12 @@
+programa
+	declare a, b, resultado.
+	a := 10.
+	b := 20.
+	se (a < b) entao {
+	    resultado := a + b.
+	    escreva("Resultado é:").
+	    escreva(resultado).
+	} senao {
+	    escreva("A condição não foi satisfeita.").
+	}
+fimprog

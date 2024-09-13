@@ -1,0 +1,184 @@
+// Generated from FrassonGrammar.g4 by ANTLR 4.13.2
+package io.compiler.core;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
+
+/**
+ * This interface defines a complete listener for a parse tree produced by
+ * {@link FrassonGrammarParser}.
+ */
+public interface FrassonGrammarListener extends ParseTreeListener {
+	/**
+	 * Enter a parse tree produced by {@link FrassonGrammarParser#prog}.
+	 * @param ctx the parse tree
+	 */
+	void enterProg(FrassonGrammarParser.ProgContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FrassonGrammarParser#prog}.
+	 * @param ctx the parse tree
+	 */
+	void exitProg(FrassonGrammarParser.ProgContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FrassonGrammarParser#declara}.
+	 * @param ctx the parse tree
+	 */
+	void enterDeclara(FrassonGrammarParser.DeclaraContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FrassonGrammarParser#declara}.
+	 * @param ctx the parse tree
+	 */
+	void exitDeclara(FrassonGrammarParser.DeclaraContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FrassonGrammarParser#bloco}.
+	 * @param ctx the parse tree
+	 */
+	void enterBloco(FrassonGrammarParser.BlocoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FrassonGrammarParser#bloco}.
+	 * @param ctx the parse tree
+	 */
+	void exitBloco(FrassonGrammarParser.BlocoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FrassonGrammarParser#cmd}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmd(FrassonGrammarParser.CmdContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FrassonGrammarParser#cmd}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmd(FrassonGrammarParser.CmdContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FrassonGrammarParser#cmdLeitura}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmdLeitura(FrassonGrammarParser.CmdLeituraContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FrassonGrammarParser#cmdLeitura}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmdLeitura(FrassonGrammarParser.CmdLeituraContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FrassonGrammarParser#cmdEscrita}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmdEscrita(FrassonGrammarParser.CmdEscritaContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FrassonGrammarParser#cmdEscrita}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmdEscrita(FrassonGrammarParser.CmdEscritaContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FrassonGrammarParser#cmdExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmdExpr(FrassonGrammarParser.CmdExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FrassonGrammarParser#cmdExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmdExpr(FrassonGrammarParser.CmdExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FrassonGrammarParser#cmdIf}.
+	 * @param ctx the parse tree
+	 */
+	void enterCmdIf(FrassonGrammarParser.CmdIfContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FrassonGrammarParser#cmdIf}.
+	 * @param ctx the parse tree
+	 */
+	void exitCmdIf(FrassonGrammarParser.CmdIfContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FrassonGrammarParser#op_rel}.
+	 * @param ctx the parse tree
+	 */
+	void enterOp_rel(FrassonGrammarParser.Op_relContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FrassonGrammarParser#op_rel}.
+	 * @param ctx the parse tree
+	 */
+	void exitOp_rel(FrassonGrammarParser.Op_relContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code exprTermo}
+	 * labeled alternative in {@link FrassonGrammarParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprTermo(FrassonGrammarParser.ExprTermoContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code exprTermo}
+	 * labeled alternative in {@link FrassonGrammarParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprTermo(FrassonGrammarParser.ExprTermoContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code exprOp}
+	 * labeled alternative in {@link FrassonGrammarParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprOp(FrassonGrammarParser.ExprOpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code exprOp}
+	 * labeled alternative in {@link FrassonGrammarParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprOp(FrassonGrammarParser.ExprOpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code termoOp}
+	 * labeled alternative in {@link FrassonGrammarParser#termo}.
+	 * @param ctx the parse tree
+	 */
+	void enterTermoOp(FrassonGrammarParser.TermoOpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code termoOp}
+	 * labeled alternative in {@link FrassonGrammarParser#termo}.
+	 * @param ctx the parse tree
+	 */
+	void exitTermoOp(FrassonGrammarParser.TermoOpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code termoFator}
+	 * labeled alternative in {@link FrassonGrammarParser#termo}.
+	 * @param ctx the parse tree
+	 */
+	void enterTermoFator(FrassonGrammarParser.TermoFatorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code termoFator}
+	 * labeled alternative in {@link FrassonGrammarParser#termo}.
+	 * @param ctx the parse tree
+	 */
+	void exitTermoFator(FrassonGrammarParser.TermoFatorContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code fatorNum}
+	 * labeled alternative in {@link FrassonGrammarParser#fator}.
+	 * @param ctx the parse tree
+	 */
+	void enterFatorNum(FrassonGrammarParser.FatorNumContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code fatorNum}
+	 * labeled alternative in {@link FrassonGrammarParser#fator}.
+	 * @param ctx the parse tree
+	 */
+	void exitFatorNum(FrassonGrammarParser.FatorNumContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code fatorID}
+	 * labeled alternative in {@link FrassonGrammarParser#fator}.
+	 * @param ctx the parse tree
+	 */
+	void enterFatorID(FrassonGrammarParser.FatorIDContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code fatorID}
+	 * labeled alternative in {@link FrassonGrammarParser#fator}.
+	 * @param ctx the parse tree
+	 */
+	void exitFatorID(FrassonGrammarParser.FatorIDContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code fatorExpr}
+	 * labeled alternative in {@link FrassonGrammarParser#fator}.
+	 * @param ctx the parse tree
+	 */
+	void enterFatorExpr(FrassonGrammarParser.FatorExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code fatorExpr}
+	 * labeled alternative in {@link FrassonGrammarParser#fator}.
+	 * @param ctx the parse tree
+	 */
+	void exitFatorExpr(FrassonGrammarParser.FatorExprContext ctx);
+}

@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'antlr'
+}
+
+group 'io.compiler.main'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    antlr 'org.antlr:antlr4:4.13.2'
+    implementation 'org.antlr:antlr4-runtime:4.13.2'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+antlr {
+    arguments += ['-visitor', '-package', 'com.seuprojeto']
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs += 'build/generated-src/antlr/main'
+        }
+    }
+}
+
+compileJava {
+    dependsOn generateGrammarSource
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.release = 11 // Adjust according to your Java version
+}

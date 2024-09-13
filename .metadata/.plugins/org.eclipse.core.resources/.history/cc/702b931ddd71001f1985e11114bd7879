@@ -1,0 +1,21 @@
+package io.compiler.core.ast;
+
+public class CommandAssign extends Command {
+    private String varName;
+    private String expression;
+
+    public CommandAssign(String varName, String expression) {
+        this.varName = varName;
+        this.expression = expression;
+    }
+
+    @Override
+    public String generateTarget() {
+        return varName + " = " + expression + ";";
+    }
+
+    @Override
+    public String toString() {
+        return "CommandAssign [var=" + varName + ", expr=" + expression + "]";
+    }
+}

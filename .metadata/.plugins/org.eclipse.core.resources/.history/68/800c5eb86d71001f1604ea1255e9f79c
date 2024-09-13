@@ -1,0 +1,15 @@
+package io.compiler.main;
+
+import io.compiler.core.FrassonGrammarLexer;
+import io.compiler.core.FrassonGrammarParser;
+
+public class Main {
+	public static void main(String[] args) {
+		try {
+			FrassonGrammarLexer lexer;
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+}

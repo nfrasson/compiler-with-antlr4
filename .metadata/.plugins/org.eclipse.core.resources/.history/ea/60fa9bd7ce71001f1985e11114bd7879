@@ -1,0 +1,32 @@
+package io.compiler.types;
+
+public class Var {
+    private String name;
+    private int type;
+    private String value;
+
+    public static final int NUMBER = 0;
+    public static final int TEXT = 1;
+
+    public Var(String name, int type) {
+        this.name = name;
+        this.type = type;
+        this.value = (type == NUMBER) ? "0" : "";
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+}

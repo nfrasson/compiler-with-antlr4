@@ -1,0 +1,48 @@
+package io.compiler.core.ast;
+
+import java.util.ArrayList;
+
+public class CommandWhile extends Command {
+    private String expression;
+    private ArrayList<Command> loopCommands;
+
+    public CommandWhile() {
+        this.expression = expression;
+        this.loopCommands = loopCommands;
+    }
+
+	public void setExpression(String expression) {
+		this.expression = expression;
+	}
+
+	public void setLoopCommands(ArrayList<Command> loopCommands) {
+		this.loopCommands = loopCommands;
+	}
+
+    @Override
+    public String generateTarget() {
+        // Verificar se o laço while está vazio
+//        if (loopCommands.isEmpty()) {
+//            throw new RuntimeException("Erro: O bloco do laço 'while' está vazio.");
+//        }
+
+        StringBuilder str = new StringBuilder();
+
+        // Geração de código em Java para o laço while
+        str.append("while (" + expression + ") {\n");
+
+        // Gerar código para os comandos dentro do laço
+        for (Command cmd : loopCommands) {
+            str.append(cmd.generateTarget()).append("\n");
+        }
+
+        str.append("}\n");
+        
+        return str.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "While Command [expression=" + expression + "]";
+    }
+}

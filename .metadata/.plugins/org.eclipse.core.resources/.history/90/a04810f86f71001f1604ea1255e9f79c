@@ -1,0 +1,100 @@
+grammar FrassonGrammar;
+
+// Regras iniciais
+prog
+    : 'programa' declara bloco 'fimprog' EOF
+    ;
+
+// Bloco de comandos principal
+bloco
+    : (cmd '.')+
+    ;
+
+// Comandos
+cmd
+    : cmdLeitura
+    | cmdEscrita
+    | cmdExpr
+    | cmdIf
+    | declara
+    ;
+    
+// Declarações de variáveis
+declara
+    : 'declare' ID (',' ID)* '.'
+    ;
+
+// Comando de leitura
+cmdLeitura
+    : 'leia' '(' ID ')'
+    ;
+
+// Comando de escrita
+cmdEscrita
+    : 'escreva' '(' (TEXT | ID) ')'
+    ;
+
+// Comando de expressão (atribuição)
+cmdExpr
+    : ID ':=' expr
+    ;
+
+// Comando condicional
+cmdIf
+    : 'se' '(' expr op_rel expr ')' 'entao' blocoIf ('senao' blocoIf)?
+    ;
+
+// Bloco de comandos para cmdIf
+blocoIf
+    : '{' (cmd '.')+ '}'
+    ;
+
+// Operadores relacionais
+op_rel
+    : '<'
+    | '>'
+    | '<='
+    | '>='
+    | '!='
+    | '=='
+    ;
+
+// Expressões
+expr
+    : expr ('+' | '-') termo       # exprOp
+    | termo                        # exprTermo
+    ;
+
+// Termos
+termo
+    : termo ('*' | '/') fator      # termoOp
+    | fator                        # termoFator
+    ;
+
+// Fatores
+fator
+    : NUM                          # fatorNum
+    | ID                           # fatorID
+    | '(' expr ')'                 # fatorExpr
+    ;
+
+// Regras léxicas
+
+// Texto
+TEXT
+    : '"' (~["\r\n])* '"'          // Tudo exceto aspas duplas e quebras de linha
+    ;
+
+// Identificadores e números
+NUM
+    : [0-9]+
+    ;
+
+ID
+    : [a-zA-Z] [a-zA-Z0-9]*
+    ;
+
+// Tokens ignorados
+WS
+    : [ \t\r\n]+ -> skip
+    ;

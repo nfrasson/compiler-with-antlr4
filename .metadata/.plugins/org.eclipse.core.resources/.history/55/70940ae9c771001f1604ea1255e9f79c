@@ -1,0 +1,210 @@
+package io.compiler.main;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import io.compiler.types.Var;
+import io.compiler.core.FrassonGrammarParser;
+import io.compiler.core.FrasonGrammarBaseVisitor;
+
+public class FrassonGrammarBaseVisitorImpl extends FrassonGrammarBaseVisitor<Void> {
+
+    private ArrayList<Var> varList = new ArrayList<>();
+    private Map<String, Var> symbolTable = new HashMap<>();
+
+    private double parseNumber(String text) {
+        return Double.parseDouble(text);
+    }
+
+    private String parseString(String text) {
+        return text.substring(1, text.length() - 1);
+    }
+
+    @Override
+    public Void visitDeclara(FrassonGrammarParser.DeclaraContext ctx) {
+        for (FrassonGrammarParser.VariavelContext varCtx : ctx.variavel()) {
+            String varName = varCtx.ID().getText();
+            String varTypeStr = varCtx.tipo().getText();
+            int varType;
+
+            if (varTypeStr.equals("numero")) {
+                varType = Var.NUMBER;
+            } else if (varTypeStr.equals("string")) {
+                varType = Var.TEXT;
+            } else {
+                throw new RuntimeException("Tipo de variável desconhecido: " + varTypeStr);
+            }
+
+            Var var = new Var(varName, varType);
+            varList.add(var);
+            symbolTable.put(varName, var);
+        }
+        return null;
+    }
+
+    @Override
+    public Void visitCmdExpr(FrassonGrammarParser.CmdExprContext ctx) {
+        String varName = ctx.ID().getText();
+        Var var = symbolTable.get(varName);
+
+        if (var == null) {
+            System.err.println("Erro: Variável não declarada " + varName);
+            return null;
+        }
+
+        // Avaliação da expressão
+        Object value = visit(ctx.expr());
+
+        // Verificação de tipos e atribuição
+        if (var.getType() == Var.NUMBER && value instanceof Double) {
+            var.setValue(value.toString());
+        } else if (var.getType() == Var.TEXT && value instanceof String) {
+            var.setValue((String) value);
+        } else {
+            System.err.println("Erro: Incompatibilidade de tipos na atribuição à variável " + varName);
+        }
+
+        return null;
+    }
+
+    @Override
+    public Object visitExprOp(FrassonGrammarParser.ExprOpContext ctx) {
+        Object left = visit(ctx.expr());
+        Object right = visit(ctx.termo());
+        String op = ctx.getChild(1).getText();
+
+        if (left instanceof Double && right instanceof Double) {
+            double l = (Double) left;
+            double r = (Double) right;
+            switch (op) {
+                case "+":
+                    return l + r;
+                case "-":
+                    return l - r;
+                default:
+                    System.err.println("Erro: Operador desconhecido " + op);
+                    return null;
+            }
+        } else if (left instanceof String || right instanceof String) {
+            if (op.equals("+")) {
+                return left.toString() + right.toString();
+            } else {
+                System.err.println("Erro: Operação inválida entre strings com operador " + op);
+                return null;
+            }
+        } else {
+            System.err.println("Erro: Tipos incompatíveis na expressão");
+            return null;
+        }
+    }
+
+    @Override
+    public Object visitExprTermo(FrassonGrammarParser.ExprTermoContext ctx) {
+        return visit(ctx.termo());
+    }
+
+    @Override
+    public Object visitTermoOp(FrassonGrammarParser.TermoOpContext ctx) {
+        Object left = visit(ctx.termo());
+        Object right = visit(ctx.fator());
+        String op = ctx.getChild(1).getText();
+
+        if (left instanceof Double && right instanceof Double) {
+            double l = (Double) left;
+            double r = (Double) right;
+            switch (op) {
+                case "*":
+                    return l * r;
+                case "/":
+                    if (r != 0) {
+                        return l / r;
+                    } else {
+                        System.err.println("Erro: Divisão por zero");
+                        return null;
+                    }
+                default:
+                    System.err.println("Erro: Operador desconhecido " + op);
+                    return null;
+            }
+        } else {
+            System.err.println("Erro: Operação inválida. Esperado números.");
+            return null;
+        }
+    }
+
+    @Override
+    public Object visitTermoFator(FrassonGrammarParser.TermoFatorContext ctx) {
+        return visit(ctx.fator());
+    }
+
+    @Override
+    public Object visitFatorNum(FrassonGrammarParser.FatorNumContext ctx) {
+        return parseNumber(ctx.NUM().getText());
+    }
+
+    @Override
+    public Object visitFatorID(FrassonGrammarParser.FatorIDContext ctx) {
+        String varName = ctx.ID().getText();
+        Var var = symbolTable.get(varName);
+        if (var == null) {
+            System.err.println("Erro: Variável não declarada " + varName);
+            return null;
+        }
+        if (var.getType() == Var.NUMBER) {
+            return parseNumber(var.getValue());
+        } else if (var.getType() == Var.TEXT) {
+            return var.getValue();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Object visitFatorExpr(FrassonGrammarParser.FatorExprContext ctx) {
+        return visit(ctx.expr());
+    }
+
+    @Override
+    public Object visitCmdEscrita(FrassonGrammarParser.CmdEscritaContext ctx) {
+        if (ctx.TEXT() != null) {
+            String text = parseString(ctx.TEXT().getText());
+            System.out.println(text);
+        } else if (ctx.ID() != null) {
+            String varName = ctx.ID().getText();
+            Var var = symbolTable.get(varName);
+            if (var == null) {
+                System.err.println("Erro: Variável não declarada " + varName);
+            } else {
+                System.out.println(var.getValue());
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Void visitCmdLeitura(FrassonGrammarParser.CmdLeituraContext ctx) {
+        String varName = ctx.ID().getText();
+        Var var = symbolTable.get(varName);
+        if (var == null) {
+            System.err.println("Erro: Variável não declarada " + varName);
+            return null;
+        }
+        try {
+            System.out.print("Entrada para " + varName + ": ");
+            java.util.Scanner scanner = new java.util.Scanner(System.in);
+            String input = scanner.nextLine();
+            if (var.getType() == Var.NUMBER) {
+                Double.parseDouble(input); // Verifica se é um número válido
+                var.setValue(input);
+            } else if (var.getType() == Var.TEXT) {
+                var.setValue(input);
+            }
+        } catch (Exception e) {
+            System.err.println("Erro ao ler entrada: " + e.getMessage());
+        }
+        return null;
+    }
+
+    // Implementação adicional para cmdIf, op_rel, etc., conforme necessário
+}

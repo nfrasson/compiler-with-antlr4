@@ -1,0 +1,4 @@
+INDEX VERSION 1.134+C:\Users\nicol\OneDrive\Área de Trabalho\compiler-antlr4\.metadata\.plugins\org.eclipse.jdt.core
+956031691.index
+3740047245.index
+1865797976.index

@@ -1,0 +1,29 @@
+public class CommandWhile extends Command {
+    private String condition;
+    private ArrayList<Command> loopCommands;
+
+    public CommandWhile(String condition, ArrayList<Command> loopCommands) {
+        this.condition = condition;
+        this.loopCommands = loopCommands;
+    }
+
+    @Override
+    public String generateTarget() {
+        StringBuilder str = new StringBuilder();
+        str.append("label_start_while:\n");  // Label para o início do laço
+        str.append("if not (" + condition + ") goto label_end_while;\n");  // Condição de saída do laço
+
+        for (Command cmd : loopCommands) {
+            str.append(cmd.generateTarget());  // Gera o código para cada comando no corpo do laço
+        }
+
+        str.append("goto label_start_while;\n");  // Volta para o início do laço
+        str.append("label_end_while:\n");  // Label para o fim do laço
+        return str.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "While Command [condition=" + condition + "]";
+    }
+}
